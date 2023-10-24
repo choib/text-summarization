@@ -1,0 +1,8 @@
+./src/model
+bin
+etc
+include
+lib
+share
+pyenv.cfg
+*.pyc

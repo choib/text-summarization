@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Korean_text_summarization
 
 ## About This Repository
@@ -36,3 +37,7 @@ The purpose of this experiment is to implement text summarization by using langc
 ## Reference:
 A base line of this code is from
 https://github.com/yang0369/LLM_summarization
+=======
+# LLM_summarization
+summarize long text using langchain + gcp
+>>>>>>> 70c44a4 (Initial commit)
