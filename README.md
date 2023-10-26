@@ -40,4 +40,3 @@ https://github.com/yang0369/LLM_summarization
 =======
 # LLM_summarization
 summarize long text using langchain + gcp
->>>>>>> 70c44a4 (Initial commit)
