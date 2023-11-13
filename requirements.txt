@@ -1,0 +1,15 @@
+cartopy==0.22.0
+langchain==0.0.334
+matplotlib==3.7.3
+mayavi==4.8.1
+networkx==3.1
+numpy==1.26.1
+pandas==2.0.3
+Pillow==10.1.0
+Pillow==10.1.0
+pydash==7.0.6
+pytz==2023.3.post1
+scipy==1.11.3
+seaborn==0.13.0
+streamlit==1.28.1
+transformers==4.34.1
