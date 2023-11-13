@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Korean_text_summarization
 
 ## About This Repository
@@ -23,6 +22,8 @@ The purpose of this experiment is to implement text summarization by using langc
 ## Put model files and edit config.py
 1. Put downloaded gguf file in `src/model`
 2. Put the physical path of embedding model directory to `src/config/config.py`
+
+## Install python 3.11
 
 ## Run App Locally
 1. build environment:
