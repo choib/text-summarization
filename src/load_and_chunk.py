@@ -1,11 +1,10 @@
 import re
 from dataclasses import dataclass
 from typing import Dict, List, Optional
-
-import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import pydash
+#import spacy
 from langchain.schema.embeddings import Embeddings
 from langchain.text_splitter import (
                                      RecursiveCharacterTextSplitter,
@@ -16,6 +15,8 @@ from networkx.algorithms import community
 from scipy.spatial.distance import cosine
 from config import config
 from utilities.custom_logger import CustomLogger
+from llama_index.langchain_helpers.text_splitter import SentenceSplitter
+
 
 logger = CustomLogger()
 
@@ -73,12 +74,15 @@ class ProcessingPipeline:
             if self.get_num_of_tokens(chunk) > config.CHUNK_SIZE:
                 chunks_require_split.append(i)
 
-        text_splitter = CharacterTextSplitter().from_huggingface_tokenizer(
-                config.TOKENIZER,
-                chunk_size=config.CHUNK_SIZE,
-                chunk_overlap=0, 
-        )
-
+        # text_splitter = CharacterTextSplitter().from_huggingface_tokenizer( #.from_tiktoken_encoder( 
+        #         config.TOKENIZER,
+        #         chunk_size=config.CHUNK_SIZE,
+        #         chunk_overlap=0, 
+        # )
+        text_splitter = SentenceSplitter(
+            chunk_size=config.CHUNK_SIZE,
+            chunk_overlap=10,
+            )
         # fine the chunks which need further split
         if len(chunks_require_split) > 0:
             for i in chunks_require_split:
@@ -92,10 +96,16 @@ class ProcessingPipeline:
 
         logger.info(f"After splitting by paragrah:\ntotal No. of chunks: {len(chunks)}, max length: {length_max}, min length: {length_min}")
 
-        text_splitter = SentenceTransformersTokenTextSplitter( 
-            model_name=config.EMBED_PATH,
-            )
-    
+        # text_splitter = SentenceTransformersTokenTextSplitter( 
+        #     model_name=config.EMBED_PATH,
+        #     )
+       
+        text_splitter = RecursiveCharacterTextSplitter().from_huggingface_tokenizer( #from_tiktoken_encoder( #
+                config.TOKENIZER,
+                chunk_size=config.CHUNK_SIZE//2,
+                chunk_overlap=10, 
+        )
+      
         paragraphs = [s.page_content for s in text_splitter.create_documents(chunks)]
 
         # get the statistics of setences
