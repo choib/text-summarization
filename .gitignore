@@ -5,4 +5,7 @@ include
 lib
 share
 pyenv.cfg
+.flake8
+pyvenv.cfg
 *.pyc
+.vscode
