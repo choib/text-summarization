@@ -8,3 +8,5 @@ share
 pyvenv.cfg
 *.pyc
 .vscode
+.hypothesis
+.pytest_cashe

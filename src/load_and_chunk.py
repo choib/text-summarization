@@ -4,12 +4,13 @@ from typing import Dict, List, Optional
 import networkx as nx
 import numpy as np
 import pydash
-#import spacy
+import spacy
 from langchain.schema.embeddings import Embeddings
 from langchain.text_splitter import (
                                      RecursiveCharacterTextSplitter,
                                      SentenceTransformersTokenTextSplitter,
                                      CharacterTextSplitter,
+                                     SpacyTextSplitter,
                                      )
 from networkx.algorithms import community
 from scipy.spatial.distance import cosine
@@ -74,8 +75,8 @@ class ProcessingPipeline:
             if self.get_num_of_tokens(chunk) > config.CHUNK_SIZE:
                 chunks_require_split.append(i)
 
-        # text_splitter = CharacterTextSplitter().from_huggingface_tokenizer( #.from_tiktoken_encoder( 
-        #         config.TOKENIZER,
+        # text_splitter = SpacyTextSplitter(pipeline='ko_core_news_lg',#).from_huggingface_tokenizer( #.from_tiktoken_encoder( #CharacterTextSplitter()
+        #         #config.TOKENIZER,
         #         chunk_size=config.CHUNK_SIZE,
         #         chunk_overlap=0, 
         # )
@@ -96,15 +97,15 @@ class ProcessingPipeline:
 
         logger.info(f"After splitting by paragrah:\ntotal No. of chunks: {len(chunks)}, max length: {length_max}, min length: {length_min}")
 
-        # text_splitter = SentenceTransformersTokenTextSplitter( 
-        #     model_name=config.EMBED_PATH,
-        #     )
+        text_splitter = SentenceTransformersTokenTextSplitter( 
+            model_name=config.EMBED_PATH,
+            )
        
-        text_splitter = RecursiveCharacterTextSplitter().from_huggingface_tokenizer( #from_tiktoken_encoder( #
-                config.TOKENIZER,
-                chunk_size=config.CHUNK_SIZE//2,
-                chunk_overlap=10, 
-        )
+        # text_splitter = RecursiveCharacterTextSplitter().from_huggingface_tokenizer( #from_tiktoken_encoder( #
+        #         config.TOKENIZER,
+        #         chunk_size=config.CHUNK_SIZE//2,
+        #         chunk_overlap=10, 
+        # )
       
         paragraphs = [s.page_content for s in text_splitter.create_documents(chunks)]
 
